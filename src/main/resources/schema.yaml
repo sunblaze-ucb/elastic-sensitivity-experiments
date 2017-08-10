@@ -1,0 +1,93 @@
+---
+databases:
+- database: "experiments"
+  dialect: "vertica"
+  namespace: "public"
+  tables:
+  - table: "part"
+    columns:
+    - name: "P_PARTKEY"
+      isUnique: true
+    - name: "P_NAME"
+    - name: "P_MFGR"
+    - name: "P_BRAND"
+    - name: "P_TYPE"
+    - name: "P_SIZE"
+    - name: "P_CONTAINER"
+    - name: "P_RETAILPRICE"
+    - name: "P_COMMENT"
+  - table: "supplier"
+    columns:
+    - name: "S_SUPPKEY"
+      isUnique: true
+    - name: "S_NAME"
+    - name: "S_ADDRESS"
+    - name: "S_NATIONKEY"
+      maxFreq: 438
+    - name: "S_PHONE"
+    - name: "S_ACCTBAL"
+    - name: "S_COMMENT"
+  - table: "partsupp"
+    columns:
+    - name: "PS_PARTKEY"
+      maxFreq: 4
+    - name: "PS_SUPPKEY"
+    - name: "PS_AVAILQTY"
+    - name: "PS_SUPPLYCOST"
+    - name: "PS_COMMENT"
+  - table: "customer"
+    columns:
+    - name: "C_CUSTKEY"
+      isUnique: true
+    - name: "C_NAME"
+    - name: "C_ADDRESS"
+    - name: "C_NATIONKEY"
+    - name: "C_PHONE"
+    - name: "C_ACCTBAL"
+    - name: "C_MKTSEGMENT"
+    - name: "C_COMMENT"
+  - table: "orders"
+    columns:
+    - name: "O_ORDERKEY"
+      isUnique: true
+    - name: "O_CUSTKEY"
+      maxFreq: 41
+    - name: "O_ORDERSTATUS"
+    - name: "O_TOTALPRICE"
+    - name: "O_ORDERDATE"
+    - name: "O_ORDERPRIORITY"
+    - name: "O_CLERK"
+    - name: "O_SHIPPRIORITY"
+    - name: "O_COMMENT"
+  - table: "lineitem"
+    columns:
+    - name: "L_ORDERKEY"
+      maxFreq: 7
+    - name: "L_PARTKEY"
+    - name: "L_SUPPKEY"
+      maxFreq: 694
+    - name: "L_LINENUMBER"
+    - name: "L_QUANTITY"
+    - name: "L_EXTENDEDPRICE"
+    - name: "L_DISCOUNT"
+    - name: "L_TAX"
+    - name: "L_RETURNFLAG"
+    - name: "L_LINESTATUS"
+    - name: "L_SHIPDATE"
+    - name: "L_COMMITDATE"
+    - name: "L_RECEIPTDATE"
+    - name: "L_SHIPINSTRUCT"
+    - name: "L_SHIPMODE"
+    - name: "L_COMMENT"
+  - table: "nation"
+    columns:
+    - name: "N_NATIONKEY"
+      isUnique: true
+    - name: "N_NAME"
+    - name: "N_REGIONKEY"
+    - name: "N_COMMENT"
+  - table: "region"
+    columns:
+    - name: "R_REGIONKEY"
+    - name: "R_NAME"
+    - name: "R_COMMENT"
