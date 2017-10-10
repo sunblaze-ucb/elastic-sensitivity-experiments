@@ -5,9 +5,10 @@ databases:
   namespace: "public"
   tables:
   - table: "part"
+    isPublic: true
     columns:
     - name: "P_PARTKEY"
-      isUnique: true
+      maxFreq: 1
     - name: "P_NAME"
     - name: "P_MFGR"
     - name: "P_BRAND"
@@ -17,9 +18,10 @@ databases:
     - name: "P_RETAILPRICE"
     - name: "P_COMMENT"
   - table: "supplier"
+    isPublic: false
     columns:
     - name: "S_SUPPKEY"
-      isUnique: true
+      maxFreq: 1
     - name: "S_NAME"
     - name: "S_ADDRESS"
     - name: "S_NATIONKEY"
@@ -28,6 +30,7 @@ databases:
     - name: "S_ACCTBAL"
     - name: "S_COMMENT"
   - table: "partsupp"
+    isPublic: false
     columns:
     - name: "PS_PARTKEY"
       maxFreq: 4
@@ -36,9 +39,10 @@ databases:
     - name: "PS_SUPPLYCOST"
     - name: "PS_COMMENT"
   - table: "customer"
+    isPublic: false
     columns:
     - name: "C_CUSTKEY"
-      isUnique: true
+      maxFreq: 1
     - name: "C_NAME"
     - name: "C_ADDRESS"
     - name: "C_NATIONKEY"
@@ -47,9 +51,10 @@ databases:
     - name: "C_MKTSEGMENT"
     - name: "C_COMMENT"
   - table: "orders"
+    isPublic: false
     columns:
     - name: "O_ORDERKEY"
-      isUnique: true
+      maxFreq: 1
     - name: "O_CUSTKEY"
       maxFreq: 41
     - name: "O_ORDERSTATUS"
@@ -60,6 +65,7 @@ databases:
     - name: "O_SHIPPRIORITY"
     - name: "O_COMMENT"
   - table: "lineitem"
+    isPublic: false
     columns:
     - name: "L_ORDERKEY"
       maxFreq: 7
@@ -80,14 +86,17 @@ databases:
     - name: "L_SHIPMODE"
     - name: "L_COMMENT"
   - table: "nation"
+    isPublic: true
     columns:
     - name: "N_NATIONKEY"
-      isUnique: true
+      maxFreq: 1
     - name: "N_NAME"
     - name: "N_REGIONKEY"
     - name: "N_COMMENT"
   - table: "region"
+    isPublic: true
     columns:
     - name: "R_REGIONKEY"
+      maxFreq: 1
     - name: "R_NAME"
     - name: "R_COMMENT"

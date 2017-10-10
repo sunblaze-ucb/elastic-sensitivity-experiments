@@ -2,7 +2,7 @@ import java.io.{BufferedInputStream, File, FileInputStream}
 
 import com.fasterxml.jackson.databind.MappingIterator
 import com.fasterxml.jackson.dataformat.csv.{CsvMapper, CsvParser, CsvSchema}
-import com.uber.engsec.dp.analysis.differential_privacy.{ElasticSensitivityAnalysis, SensitivityInfo}
+import com.uber.engsec.dp.analysis.differential_privacy.{ElasticSensitivityAnalysis, ColSensitivity}
 import com.uber.engsec.dp.dataflow.column.AbstractColumnAnalysis.ColumnFacts
 import com.uber.engsec.dp.sql.QueryParser
 import com.uber.engsec.dp.sql.relational_algebra.Relation
@@ -69,7 +69,7 @@ object Experiment {
 
     val analysis = new ElasticSensitivityAnalysis()
     // cache elastic sensitivity results at k so we don't need to re-run analysis when processing the next column
-    val analysisResultsAtK = new mutable.HashMap[Int, ColumnFacts[SensitivityInfo]]
+    val analysisResultsAtK = new mutable.HashMap[Int, ColumnFacts[ColSensitivity]]
 
     /** Calculates the smooth elastic sensitivity by recursively computing smooth sensitivity for each value of k
       * until the function decreases at k+1. Since elastic sensitivity increases polynomially (at worst) in k while the
@@ -79,7 +79,7 @@ object Experiment {
     def smoothSensitivity(colIdx: Int, k: Int, prevSensitivity: Double): Double = {
       val analysisResultAtK = analysisResultsAtK.getOrElseUpdate(k, {
         analysis.setK(k)
-        analysis.analyzeQuery(tree)
+        analysis.analyzeQuery(tree).colFacts
       })
 
       val elasticSensitivityAtK = analysisResultAtK(colIdx).sensitivity.get
