@@ -17,6 +17,9 @@ object Experiment {
   /** Privacy budget */
   val EPSILON: Double = 0.1
 
+  /** Delta parameter: 1/n^2, for n=2,000,000 */
+  val DELTA: Double = 1 / (math.pow(2000000, 2))
+
   /** Returns pair (median error, median coverage) for each aggregated column in the results. */
   def getColumnErrors(queryResults: Iterator[Array[String]],
                       coverageResults: Iterator[Array[String]],
@@ -38,7 +41,7 @@ object Experiment {
           Math.abs((noisyResult - sensitiveResult) / sensitiveResult)
         }
 
-        errors.sum / NUM_SIMULATIONS
+        (errors.sum / NUM_SIMULATIONS) * 100.0
       }
     }.toList.transpose // from row-oriented to column-oriented list of lists
 
@@ -83,7 +86,9 @@ object Experiment {
       })
 
       val elasticSensitivityAtK = analysisResultAtK(colIdx).sensitivity.get
-      val smoothSensitivityAtK = Math.exp(-k * EPSILON) * elasticSensitivityAtK
+      val beta = EPSILON / (2 * Math.log(2 / DELTA))
+
+      val smoothSensitivityAtK = Math.exp(-k * beta) * elasticSensitivityAtK
 
       if (smoothSensitivityAtK <= prevSensitivity)
         prevSensitivity
