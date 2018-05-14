@@ -35,6 +35,7 @@ databases:
     - name: "PS_PARTKEY"
       maxFreq: 4
     - name: "PS_SUPPKEY"
+      maxFreq: 80
     - name: "PS_AVAILQTY"
     - name: "PS_SUPPLYCOST"
     - name: "PS_COMMENT"
